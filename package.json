@@ -13,5 +13,9 @@
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "esm": "^3.2.18"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-google": "^0.12.0"
   }
 }
