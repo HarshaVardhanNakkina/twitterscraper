@@ -10,9 +10,11 @@ import fs from "fs";
 async function scrapeUser(user) {
     const html = await getHTML(user.twitterMediaLink);
     const account = await getTwitterDetails(html);
-    const picsLinks = await getTwitterPicsLinks(html);
+    const picsLinks = await getTwitterPicsLinks(html, user);
     const path = `/home/kennys/Pictures/twitterscraper/${account.name}/`;
-    getPicsAndStore(picsLinks, path);
+    if (picsLinks.length === 0)
+        console.log(`no new pics found for ${account.name}\n`);
+    else getPicsAndStore(picsLinks, path);
 }
 
 fs.readFile("./userstoscrape.json", (err, data) => {
@@ -26,6 +28,6 @@ fs.readFile("./userstoscrape.json", (err, data) => {
     }, []);
     fs.writeFile("./userstoscrape.json", JSON.stringify({ users }), err => {
         if (err) throw err;
-        console.log("last downloaded date is updated");
+        console.log("last downloaded dates are updated and written back\n");
     });
 });
