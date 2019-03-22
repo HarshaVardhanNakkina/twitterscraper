@@ -1,21 +1,26 @@
 import {
     getHTML,
     getTwitterDetails,
-    getTwitterPhotoLinks,
-    getPhotosAndStore
+    getTwitterPicsLinks,
+    getPicsAndStore
 } from "./lib/scraper";
 
-async function go() {
-    const html = await getHTML("https://twitter.com/RaashiKhanna/media");
+import fs from "fs";
+
+async function scrapeUser(user) {
+    const html = await getHTML(user.twitterMediaLink);
     const account = await getTwitterDetails(html);
-
-    console.log(account.name, account.followers);
-
-    // const imageLinks = await getTwitterPhotoLinks(html);
-    // getPhotosAndStore(
-    //     imageLinks,
-    //     `/home/kennys/Pictures/twitterscraper/${account.name}/`
-    // );
+    const picsLinks = await getTwitterPicsLinks(html);
+    getPicsAndStore(
+        picsLinks,
+        `/home/kennys/Pictures/twitterscraper/${account.name}/`
+    );
 }
 
-go();
+fs.readFile("./userstoscrape.json", (err, data) => {
+    if (err) throw err;
+    const { users } = JSON.parse(data);
+    users.map(scrapeUser).then(res => {
+        console.log("after a user pics are downloaded");
+    });
+});

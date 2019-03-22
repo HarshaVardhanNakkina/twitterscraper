@@ -1,0 +1,26 @@
+{
+    "users": [
+        {
+            "name": "SreeMukhi",
+            "twitterMediaLink": "https://twitter.com/MukhiSree/media",
+            "lastDateTime": ""
+        }
+    ],
+    "users1": [
+        {
+            "name": "ViratKohli",
+            "twitterMediaLink": "https://twitter.com/imVkohli/media",
+            "lastDateTime": ""
+        },
+        {
+            "name": "RaashiKhanna",
+            "twitterMediaLink": "https://twitter.com/RaashiKhanna/media",
+            "lastDateTime": ""
+        },
+        {
+            "name": "RaashiKhanna",
+            "twitterMediaLink": "https://twitter.com/Rakulpreet/media",
+            "lastDateTime": ""
+        }
+    ]
+}
