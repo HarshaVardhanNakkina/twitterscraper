@@ -11,16 +11,21 @@ async function scrapeUser(user) {
     const html = await getHTML(user.twitterMediaLink);
     const account = await getTwitterDetails(html);
     const picsLinks = await getTwitterPicsLinks(html);
-    getPicsAndStore(
-        picsLinks,
-        `/home/kennys/Pictures/twitterscraper/${account.name}/`
-    );
+    const path = `/home/kennys/Pictures/twitterscraper/${account.name}/`;
+    getPicsAndStore(picsLinks, path);
 }
 
 fs.readFile("./userstoscrape.json", (err, data) => {
     if (err) throw err;
-    const { users } = JSON.parse(data);
-    users.map(scrapeUser).then(res => {
-        console.log("after a user pics are downloaded");
+    let { users } = JSON.parse(data);
+    users.map(scrapeUser);
+    users = users.reduce((acc, cur) => {
+        cur = { ...cur, lastDateTime: new Date().toString() };
+        acc.push(cur);
+        return acc;
+    }, []);
+    fs.writeFile("./userstoscrape.json", JSON.stringify({ users }), err => {
+        if (err) throw err;
+        console.log("last downloaded date is updated");
     });
 });
